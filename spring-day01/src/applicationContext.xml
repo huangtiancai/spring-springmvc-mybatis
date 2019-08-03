@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+	<!--  
+	  <bean id = "ud1" class="com.igeek.daoImp.UserDaoImp1"></bean>
+               通过调用UserDaoImp1中的默认构造方法public UserDaoImp1(){}来实例化ud1;然后将ud1属性注入给为null的ud（private UserDao ud= null;）
+	 -->
+	<!-- ud1/ud2:对象名
+	     ud1,ud2依次被实例化
+	 -->
+	<!-- 在配置文件中实例化Bean -->
+	<!-- UserDaoImpl ud1 = new UserDaoImpl-->
+	<bean id="ud1" class="com.htc.daoImp.UserDaoImp1"></bean>
+	<!-- UserDaoImpl ud2 = new UserDaoImpl-->
+	<bean id="ud2" class="com.htc.daoImp.UserDaoImp2"></bean>
+	<!-- UserService us = new UserService() -->
+    <bean id="us" class="com.htc.service.UserService">
+        <!-- UserService要依赖ud属性:private UserDao ud= null; ud属性初始为空，然后注入对象属性ud1/ud2 -->
+        <property name="ud">
+            <ref bean="ud2"/>
+        </property>
+    </bean>
+	
+</beans>
