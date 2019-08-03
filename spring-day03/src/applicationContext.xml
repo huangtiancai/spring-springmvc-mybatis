@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+	
+	<!-- component:组件 -->
+	
+	<!-- 全部使用注解进行bean的管理 -->
+    <!-- 注意：中间写有注解的包名 中间使用逗号隔开 -->
+    <!-- 在xml中添加节点 让其扫描对应包中的注解 -->
+	<context:component-scan base-package="com.htc.daoImp,com.htc.service"></context:component-scan>
+	
+</beans>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		 http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+         http://www.springframework.org/schema/mvc 
+         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+         http://www.springframework.org/schema/context 
+         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+    
+    <!-- xml（了解） -->   
+    <!-- 2.处理器映射器-每个映射器都是实现于HandlerMapping接口-->
+    <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"></bean>	
+    <!-- 3.处理器适配器-每一个适配都是实现了HandlerAdapter -->
+    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"></bean>
+    <!-- 4.视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"></bean>
+	<!-- 5.实例化handler  -->
+    <bean id="/selectItems.action" class="com.htc.handler.ItesmHandler"></bean>
+    
+	
+</beans>

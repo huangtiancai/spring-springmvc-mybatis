@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+	
+	
+	<!-- 1.spring自带数据源 -->
+<!-- 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mysql://localhost:3306/test"></property>
+        <property name="username" value="huangtc"></property>
+        <property name="password" value="huangTC@123"></property>
+	</bean> -->
+	
+	
+	<!-- 2.C3P0连接池(数据源) -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driverClassName}"></property>
+		<property name="jdbcUrl" value="${jdbc.url}"></property>
+		<property name="user" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+	<!-- 将jdbc的配置参数引入 -->
+	<context:property-placeholder location="classpath:jdbc.properties"/>
+	
+
+	<!-- 创建JDBC模板 -->
+	<bean id="jt" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- 创建dao层实例，为其注入jdbc模板实例 -->
+	<bean id="udi" class="com.htc.daoImp.UserDaoImp">
+		<property name="jt">
+			<ref bean="jt"/>
+		</property>
+	</bean>
+	
+	<!-- 创建service层实例,为其注入dao层注入属性-->
+	<bean id="us" class="com.htc.serviceImpl.UserServiceImpl">
+		<property name="ud">
+			<ref bean="udi"/>
+		</property>
+	</bean>
+	
+	
+</beans>
