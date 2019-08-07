@@ -13,26 +13,28 @@
     <!-- springmvc.xml配置：处理器映射器  适配器  视图解析器  Handler -->
     
     <!-- 第一种开发方式：使用xml（了解） --> 
-    <!-- 2,3是非注解处理器映射器和适配器 -->
-    <!-- 2.配置处理器映射器HandlerMapping-每个映射器都是实现于HandlerMapping接口
-    	 不配id不告诉别人这是一个映射器别人怎么知道这就是一个映射器呢
-		   因为每个映射器都是实现于HandlerMapping接口
-		  扫描spring容器中的id 对应的URL
+    <!-- 2,3是非注解处理器映射器和适配器，且是另外一种非注映射器/适配器 -->
+    <!-- 2.配置处理器映射器HandlerMapping
+    	SimpleUrlHandlerMapping(映射器)    [  找Handler ]     根据name
     -->
-    <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"></bean>
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+    	<property name="mappings">
+    		<props>
+    			<prop key="/selectItems.action">ih</prop>
+    		</props>
+    	</property>
+    </bean>
     	
-    <!-- 3.配置处理器的适配器 HandlerAdapter-每一个适配器都是实现了HandlerAdapter 
-    	  执行Handler的时候 回去判断该Handler是否实现controller,实现了就给你执行
-    	  即这个适配器要求实现controller接口
+    <!-- 3.HttpRequestHandlerAdapter(适配器) [  执行Handler ] 
+    	这个适配器要求实现HttpRequestHandler接口
     -->
-    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"></bean>   
-    
+    <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"></bean>
+       
     <!-- 4.视图解析器 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"></bean>
 	
-	<!-- 5.配置自己编写的Action(Handler,Controller)
-		  实例化handler  -->
-    <bean id="/selectItems.action" class="com.htc.handler.ItesmHandler"></bean>
+	<!-- 5.实例化handler 实现HttpRequestHandler: ItesmHandler2 implements HttpRequestHandler-->
+    <bean id="ih" class="com.htc.handler.ItesmHandler2"></bean>
     
 	
 </beans>
