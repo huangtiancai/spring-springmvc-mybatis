@@ -39,7 +39,7 @@ public class MyBatisSessionFactory {
 	}
 	
 	//关闭会话
-	public void closeSession(SqlSession sqlSession){
+	public static void closeSession(SqlSession sqlSession){
 		if(sqlSession!=null){
 			sqlSession.close();	
 		}

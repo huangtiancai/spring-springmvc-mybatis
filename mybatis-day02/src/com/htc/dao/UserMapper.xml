@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper映射文件:UserMapper.xml-->  
+
+<!-- namespace命名空间     对sql文件的隔离  方便管理
+	 dao层开发的时候  namespace 有特殊的意义
+ -->
+<mapper namespace="com.htc.dao.UserMapper">
+    <!-- 根据用户id查询
+    	mapper.xml中的id就是mapper.java(接口：UserMapper)中的方法名
+    	mapper.xml中的parameterType和mapper.java中的方法参数类型一致
+    	mapper.xml中的ResultType和mapper.java中方法返回类型一致
+    	#{};表示一个占位符，如果#{}中传入的是简单的类型，#{}中的名称随意
+     -->
+     
+    <!-- 测试：User user = sqlSession.selectOne("user.findUserById", 1);
+    	  parameterType="int"             测试类中调用方法传入的1是Int类型
+    	  resultType="com.htc.pojo.User"  测试方法中调用方法后返回的是User user(pojo类型)
+    -->
+    
+    
+	<select id="findUserById" parameterType="int" resultType="user">
+		select * from user where id=#{id}
+	</select>
+	
+	<select id="findUserAll" parameterType="String" resultType="user">
+		select * from user;
+	</select>
+	
+
+	
+	
+	<!-- 删除 -->
+	
+</mapper>

@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.htc.dao.UserMapper;
 import com.htc.pojo.User;
 import com.htc.utils.MyBatisSessionFactory;
 
@@ -25,62 +26,22 @@ public class Test {
 		//获得会话
 		SqlSession sqlSession = MyBatisSessionFactory.getSession();
 		
-		//使用会话中的方法操作数据库
-		User user = sqlSession.selectOne("user.findUserById", 1);
+		//获取代理的实现类(mappder的代理方式???)
+		UserMapper um = sqlSession.getMapper(UserMapper.class);
+		
+		User user = um.findUserById(3);
 		System.out.println(user);
 	}
 	
-	//模糊查询    #{}  表示一个占位，向占位中输入参数  
+	//查询所有
 	@org.junit.Test
-	public void findUserByName(){
+	public void findUserAll(){
 		//获得会话
 		SqlSession sqlSession = MyBatisSessionFactory.getSession();
 		
-		//使用会话中的方法操作数据库
-		List<User> user = sqlSession.selectList("user.findUserByName", "%a%");
+		UserMapper um = sqlSession.getMapper(UserMapper.class);
+		List<User> user = um.findUserAll();
 		System.out.println(user);
 	}
 	
-	//模糊查询  表示sql拼接 通过${}接受参数，比如传入字符串 需要自己加''
-	@org.junit.Test
-	public void findUserByName2(){
-		//获得会话
-		SqlSession sqlSession = MyBatisSessionFactory.getSession();
-		
-		//使用会话中的方法操作数据库
-		List<User> user = sqlSession.selectList("user.findUserByName2", "a");
-		System.out.println(user);
-	}
-	
-	//注意增删改需要提交事务
-	
-	//新增用户
-	@org.junit.Test
-	public void saveUser(){
-		//获得会话
-		SqlSession sqlSession = MyBatisSessionFactory.getSession();
-		int result = sqlSession.insert("user.saveUser", new User(null, "李四", "男", new Date(), "测试"));
-		sqlSession.commit();
-		System.out.println(result);//1
-	}
-	
-	//更新用户
-	@org.junit.Test
-	public void updateUser(){
-		//获得会话
-		SqlSession sqlSession = MyBatisSessionFactory.getSession();
-		int result = sqlSession.insert("user.updateUser", new User(10, "updateName", "男", new Date(), "测试"));
-		sqlSession.commit();
-		System.out.println(result);//1
-	}
-	
-	//删除用户
-	@org.junit.Test
-	public void deleteUser(){
-		//获得会话
-		SqlSession sqlSession = MyBatisSessionFactory.getSession();
-		int result = sqlSession.delete("user.deleteUser", 11);
-		sqlSession.commit();
-		System.out.println(result);//1
-	}
 }
