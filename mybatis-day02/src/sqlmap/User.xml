@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace命名空间     对sql文件的隔离  方便管理
+	 dao层开发的时候  namespace 有特殊的意义
+ -->
+<mapper namespace="user">
+    <!-- 根据用户id查询
+    	id:唯一标示
+    	#{}；表示一个占位符，如果#{}中传入的是简单的类型，#{}中的名称随意
+    	parameterType:输入参数的类型  通过#{}接受输入的参数
+    	resultType：输出结果类型，不管返回的是一条还是多条只要指定一个满足的pojo类型就可以了
+     -->
+     
+    <!-- 测试：User user = sqlSession.selectOne("user.findUserById", 1);
+    	  parameterType="int"             测试类中调用方法传入的1是Int类型
+    	  resultType="com.htc.pojo.User"  测试方法中调用方法后返回的是User user(pojo类型)
+    -->
+	<select id="findUserById" parameterType="int" resultType="com.htc.pojo.User">
+		select * from user where id=#{id}
+	</select>
+	
+	
+	<!-- 模糊查询 
+		#{}
+		表示一个占位，向占位中输入参数  ，mybatis自动进行java类型和jdbc类型的转换
+		程序员不需要考虑参数的类型
+		
+		${}
+		表示sql拼接 通过${}接受参数，比如传入字符串 需要自己加''
+		参数的接受必须写value值来接受
+		缺点：不能防止sql注入
+	-->
+	<select id="findUserByName" parameterType="String" resultType="com.htc.pojo.User">
+		select * from user where username like #{id}
+	</select>
+	
+	<select id="findUserByName2" parameterType="String" resultType="com.htc.pojo.User">
+		select * from user where username like '%${value}%'
+	</select>
+	
+	<!-- 新增用户    -->
+	<insert id="saveUser" parameterType="com.htc.pojo.User">
+		insert into user values(null,#{username},#{sex},#{birthday},#{address})
+	</insert>
+	
+	<!-- 修改用户 -->
+	<update id="updateUser" parameterType="com.htc.pojo.User">
+		update user set username = #{username},sex = #{sex},birthday = #{birthday},address = #{address} where id = #{id}
+	</update>
+	
+	<!-- 修改用户 -->
+	<update id="deleteUser" parameterType="int">
+		delete from user where id = #{id}
+	</update>
+	
+	
+	
+	<!-- 删除 -->
+	
+</mapper>
