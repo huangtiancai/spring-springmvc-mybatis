@@ -2,7 +2,7 @@
 <!DOCTYPE mapper  
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- namespace命名空间     对sql文件的隔离  方便管理
+<!-- namespace命名空间     对sql文件的隔离，防止命名重复  方便管理
 	 dao层开发的时候  namespace 有特殊的意义
  -->
 <mapper namespace="user">
