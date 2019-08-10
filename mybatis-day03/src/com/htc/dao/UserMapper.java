@@ -20,8 +20,13 @@ public interface UserMapper {
 	User findUserById(int id);
 	List<User> findUserAll();
 	List<User> findUserByName(UserQueryVO vo);
+	
 	List<User> dynamicFind(User user);//动态sql查询
 	List<User> dynamicFind2(User user);//动态sql查询
+	
 	List<User> findUserByIds(UserQueryVO vo);//根据多个id 查询 
+	List<User> findUserByIds2(UserQueryVO vo);//根据多个id 查询 
+	List<User> findUserByIds3(UserQueryVO vo);//根据多个id 查询 
+	List<User> findUserByIds4(UserQueryVO vo);//根据多个id 查询 
 	
 }

@@ -128,6 +128,7 @@ public class Test {
 		//获得会话
 		SqlSession sqlSession = MyBatisSessionFactory.getSession();
 		
+	
 		//获取代理的实现类
 		UserMapper um = sqlSession.getMapper(UserMapper.class);		
 		
@@ -152,5 +153,98 @@ public class Test {
 		
 	}
 
+	
+	//根据多个id 查询
+	@org.junit.Test
+	public void findUserByIds2(){		
+		//获得会话
+		SqlSession sqlSession = MyBatisSessionFactory.getSession();
+		
+	
+		//获取代理的实现类
+		UserMapper um = sqlSession.getMapper(UserMapper.class);		
+		
+//			private UserCustom userCustom;   class UserQueryVO
+//			private List<Integer> ids;       class UserCustom
+//			userCustom.ids
+		
+		List<Integer> ids = new ArrayList<Integer>();
+		ids.add(1);
+		ids.add(2);
+		ids.add(3);
+		
+		UserCustom uc = new UserCustom();
+		uc.setIds(ids);
+		
+		UserQueryVO vo = new UserQueryVO();
+		vo.setUserCustom(uc);
+		
+		List<User> users = um.findUserByIds(vo);
+		
+		System.out.println(users);	
+		
+	}
+	
+	
+	//根据多个id 查询
+	@org.junit.Test
+	public void findUserByIds3(){		
+		//获得会话
+		SqlSession sqlSession = MyBatisSessionFactory.getSession();
+		
+	
+		//获取代理的实现类
+		UserMapper um = sqlSession.getMapper(UserMapper.class);		
+		
+//				private UserCustom userCustom;   class UserQueryVO
+//				private List<Integer> ids;       class UserCustom
+//				userCustom.ids
+		
+		List<Integer> ids = new ArrayList<Integer>();
+		ids.add(1);
+		ids.add(2);
+		ids.add(3);
+		
+		UserCustom uc = new UserCustom();
+		uc.setIds(ids);
+		
+		UserQueryVO vo = new UserQueryVO();
+		vo.setUserCustom(uc);
+		
+		List<User> users = um.findUserByIds(vo);
+		
+		System.out.println(users);	
+		
+	}
+	
+	@org.junit.Test
+	public void findUserByIds4(){		
+		//获得会话
+		SqlSession sqlSession = MyBatisSessionFactory.getSession();
+		
+	
+		//获取代理的实现类
+		UserMapper um = sqlSession.getMapper(UserMapper.class);		
+		
+//				private UserCustom userCustom;   class UserQueryVO
+//				private List<Integer> ids;       class UserCustom
+//				userCustom.ids
+		
+		List<Integer> ids = new ArrayList<Integer>();
+		ids.add(1);
+		ids.add(2);
+		ids.add(5);
+		
+		UserCustom uc = new UserCustom();
+		uc.setIds(ids);
+		
+		UserQueryVO vo = new UserQueryVO();
+		vo.setUserCustom(uc);
+		
+		List<User> users = um.findUserByIds(vo);
+		
+		System.out.println(users);	
+		
+	}
 	
 }

@@ -99,26 +99,61 @@
 	</select>	
 
 	
-	<!-- 根据多个id 查询   (1,3,7) 
-		select * from user where id in (1,3,7)
-		select * from user where id=1 or id=3 or id=7
+	<!--动态sql:foreach语句
+		需求：我们需要查询 user 表中 id 分别为1,2,3的用户
+		根据多个id 查询   (1,3,7) 
+		select * from user where id in (1,2,3)
+		select * from user where id=1 or id=2 or id=3
+		动态 sql 语句的编写往往就是一个拼接的问题，为了保证拼接准确，我们最好首先要写原生的 sql 语句出来，然后在通过 mybatis 动态sql 对照着改，防止出错。
 	--> 
 	<!-- 
 		private UserCustom userCustom;   class UserQueryVO
 		private List<Integer> ids;       class UserCustom
 		userCustom.ids
 		
-		collection:需要遍历的集合
-		open：拼接的开始
-		close：拼接的结束
-		item：将遍历的数据赋值的变量（自己定义）
-		separator：每一次遍历的分割符
+		collection:需要遍历的集合-指定输入对象中的集合属性
+		item：将遍历的数据赋值的变量（自己定义）-每次遍历生成的对象
+		open：拼接的开始-开始遍历时的拼接字符串
+		close：拼接的结束-结束时拼接的字符串
+		separator:遍历对象之间需要拼接的字符串
 	 -->
+	<!-- 用 foreach 来改写 select * from user where id in (1,2,3) 第一种写法 -->
 	<select id="findUserByIds" parameterType="UserQueryVO" resultType="User">
-		select * form user where id in
-		<foreach collection="userCustom.ids" open="(" close=")" item="id" separator=",">
+		select * from user where id in
+		<foreach collection="userCustom.ids" item="id" open="(" close=")"  separator=",">
 			#{id}
 		</foreach>
+	</select>
+	
+	<!-- 用 foreach 来改写 select * from user where id in (1,2,3)第二种写法 -->
+	<select id="findUserByIds2" parameterType="UserQueryVO" resultType="User">
+		select * from user
+		<where>
+			<!--  select * from user where 1=1 and id in (1,2,3) -->
+			<foreach collection="userCustom.ids" item="id" open="and id in(" close=")"  separator=",">
+				#{id}
+			</foreach>
+		</where>	
+	</select>
+	
+	<!-- 用 foreach 来改写 select * from user where id=1 or id=2 or id=3 -->
+	<select id="findUserByIds3" parameterType="UserQueryVO" resultType="User">
+		select * from user where
+		<!--  select * from user where id=1 or id=2 or id=3 -->
+		<foreach collection="userCustom.ids" item="id" open="(" close=")"  separator="or">
+			#{id}
+		</foreach>	
+	</select>
+	
+	<!-- 用 foreach 来改写 select * from user where id=1 or id=2 or id=3 -->
+	<select id="findUserByIds4" parameterType="UserQueryVO" resultType="User">
+		select * from user
+		<where>
+			<!--  select * from user where id=1 or id=2 or id=3 -->
+			<foreach collection="userCustom.ids" item="id" open="(" close=")"  separator="or">
+				#{id}
+			</foreach>
+		</where>	
 	</select>
 	
 	
