@@ -29,9 +29,7 @@
 		select * from user;
 	</select>
 	
-
 	
 	
-	<!-- 删除 -->
 	
 </mapper>

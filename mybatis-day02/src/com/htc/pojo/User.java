@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**  
 * @ClassName:User
-* @Description:
+* @Description:User类
 * @author:htc  
 * @date:2019年8月7日 下午6:51:16
 */
@@ -17,6 +17,7 @@ public class User {
 	private String sex;
 	private Date birthday;
 	private String address;
+	
 	public Integer getId() {
 		return id;
 	}
