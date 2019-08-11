@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper映射文件:OrdersMapper.xml-->  
+<mapper namespace="com.htc.dao.OrdersMapper">
+	<!-- 
+		开发中如何选取：1.使用resultType实现 ;   2.resultMap实现
+		resultType:要定义一个扩展的pojo类型保证sql查询列的完全映射，这种方法比较简单，同样的应用比较多点
+		resultMap:使用association完成一对一的映射查询，在映射的时候需要自己配置一个resultMap，过程有点复杂。
+		如果要实现延迟加载：只能resultMap
+		如果要将查询的信息封装到对象属性（pojo）中去，只能使用resultMap		
+	 -->
+	
+	<!-- 一对一 【一个订单对一个用户】 -->
+	<!-- 需求：查询订单信息关联查询用户信息【用户名/性别】 -->
+	<!-- 1.使用resultType实现 -->
+	<!-- 无输入参数 -->
+	<!-- 
+		class OrdersCustom extends Orders
+		//继承的属性
+		private Integer id;
+		private Integer user_id;
+		private String numbers;
+		private Date createtitle;
+		private String note;
+		//扩展属性
+		private String username;
+		private String sex;
+	 -->
+	 
+	<select id="findOrdersAndUserMessage" resultType="OrdersCustom">
+		select orders.*,user.username,user.sex
+		from orders,`user`
+		where orders.user_id=user.id	
+	</select>
+
+	
+
+	<!-- 2.resultMap实现 -->
+	<!-- 定义一个resultMap;	
+		 type:最终要映射的类型,大小写均可;
+		 type="Order"是简写;
+		 type="com.htc.pojo.Orders" 将查询出的数据放入指定的对象中(映射)
+		 
+		 id:resultMap唯一标识  
+		 
+		  注意：手动映射需要指定数据表中的字段名与java中pojo类中的属性名称对应的关系	 
+	-->
+	
+	<!-- id标签指定主键字段对应关系;result：指定 非主键对应的关系 -->
+    <!-- id要映射结果的唯一标识 ,称之为主键;result映射普通字段的  -->
+    	
+   	<!-- column/property:
+   		 column:列，数据库中的字段名称
+         property：属性，java中pojo中的属性名称   
+            
+   	     column:有时也指结果集中的列名;
+   		   select id as id_,username as username_,sex as sex_,birthday,address from user where id=#{id}
+   		        特别注意，sql语句如果取别名，那么column指定的是结果集中的列名，如id_、username_...
+		        如果sql语句不取别名，column指的是列，数据库中的字段名称
+		        
+			class Orders属性：
+	   		private Integer id;
+			private Integer user_id;
+			private String numbers;
+			private Date createtitle;
+			private String note;
+			//用户对象
+			private User user;
+	-->
+	
+	<!-- association：表示进行关联查询单条记录(用于对关联信息映射到单个pojo类型中)
+    		 property:表示关联查询的结果存储在Orders中user属性中-private User user;
+    		 		     将关联信息映射到Orders的user属性中去
+    		 javaType：user属性中类型的路径(描述property的类型)
+    -->
+    
+    <!--class User中属性：
+    			private Integer id;
+				private String username;
+				private String sex;
+				private Date birthday;
+				private String address;
+    -->
+    <resultMap type="Orders" id="orderMap">   	
+    	<id column="id" property="id"/>
+    	<result column="user_id" property="user_id"/>
+    	<result column="numbers" property="numbers"/>
+    	<result column="createtitle" property="createtitle"/>
+    	<result column="note" property="note"/>
+    	<!-- association:关联查询 -->
+    	<association property="user" javaType="User">    	
+    		<id column="user_id" property="id"/>
+    		<result column="username" property="username"/>
+    		<result column="sex" property="sex"/>
+    		<result column="birthsday" property="birthday"/>
+    		<result column="address" property="address"/>
+    	</association>
+    </resultMap>
+    
+    <select id="findOrdersAndUserMessageMap" resultMap="orderMap">
+    	select orders.*,user.username,user.sex,user.birthday,user.address
+		from orders,`user`
+		where orders.user_id=user.id
+    </select>
+    
+    
+    <!-- 一对多的查询【查询一个订单的明细】 -->
+    <!-- 需求：查询所有的订单信息及订单信息下的订单明细  -->
+    <!-- resultMap进行一对多的映射
+    	在orders中 创建一个	private List<OrdersDetail> od;-->
+    <resultMap type="Orders" id="orderMap2" extends="orderMap">
+    	<!--  
+    		collection:将查询结果映射为一个集合对象
+	    	property:将关联信息映射到Orders的od个属性中去
+    		ofType：集合的类型
+    	-->
+    	<collection property="od" ofType="OrdersDetail">
+    		<!-- 
+    			private Integer id;
+				private Integer orders_id;
+				private Integer items_id;
+				private Integer items_num;
+    		 -->
+    		<id column="orderdetail_id" property="id"/>
+    		<result column="items_num" property="items_num"/>
+    		<result column="items_id" property="items_id"/>
+    	</collection>
+    </resultMap>
+    
+    <select id="findOrdersAndUserAndDetailMessage" resultMap="orderMap2">
+    	select 
+		orders.*,
+	  	user.username,user.sex,
+		orderdetail.id as orderdetail_id,orderdetail.items_num,orderdetail.items_id
+		from orders,`user`,orderdetail
+		where orders.user_id=user.id and orderdetail.orders_id=orders.id	
+    </select>
+    
+    <!-- 一对多的复杂查询 -->
+    <!-- 需求：查询所有用户信息，关联查询订单及订单详情及商品信息-->
+    <!-- 
+    	pojo的准备：
+		user中定义：  private List<Orders> orderList;
+		orders中定义：  private List<OrdersDetail> od;
+		orderDetail中定义：  private Items items;
+     -->
+     <resultMap type="User" id="userMap">
+     	<!-- 用户信息映射 -->
+     	<id column="id" property="id"/>
+     	<result column="username" property="username"/>
+     	<result column="sex" property="sex"/>
+     	<!-- 订单信息映射 -->
+     	<collection property="orderList" ofType="Orders">
+     		<id column="id" property="id"/>
+     		<result column="user_id" property="user_id"/>
+     		<result column="numbers" property="numbers"/>
+     		<result column="createtitle" property="createtitle"/>
+     		<result column="note" property="note"/>
+     		<!-- 订单明细的映射 -->
+			<collection property="od" ofType="OrdersDetail">
+	    		<id column="orderdetail_id" property="id"/>
+	    		<result column="items_num" property="items_num"/>
+	    		<result column="items_id" property="items_id"/>
+	    		<!-- 商品信息的映射 -->
+		    	<association property="items" javaType="Items">
+		    			<id column="items_id" property="id"/>
+		    			<result column="name" property="name"/>
+		    			<result column="detail" property="detail"/>
+		    	</association>
+    		</collection>
+     	</collection>
+     </resultMap>
+     
+     <select id="findOrdersAndUserAndDetailAndItemsMessage" resultMap="userMap">
+     	select 
+		orders.*,
+	  	user.username,user.sex,
+		orderdetail.id as orderdetail_id,orderdetail.items_num,orderdetail.items_id,
+		items.`name`,items.detail
+		from orders,`user`,orderdetail,items
+		where orders.user_id=user.id and orderdetail.orders_id=orders.id and items.id=orderdetail.items_id     	
+     </select>
+     
+	<!-- 多对多查询（自己实现）一对多的特例 -->
+	
+	
+	
+	
+	
+</mapper>

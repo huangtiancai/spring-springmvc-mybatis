@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper映射文件:OrdersMapper.xml-->  
+<mapper namespace="com.htc.dao.OrdersMapper">
+	<!-- 延迟加载实现：
+		需求：
+		查询订单信息及用户信息
+		刚刚开始只查询订单信息，当需要用户时，调用Orders类中的getUser()方法的时候，执行延迟加载（发送sql）.	
+	 -->
+    <resultMap type="Orders" id="orderMap">   	
+    	<id column="id" property="id"/>
+    	<result column="user_id" property="user_id"/>
+    	<result column="numbers" property="numbers"/>
+    	<result column="createtitle" property="createtitle"/>
+    	<result column="note" property="note"/>
+    	<!-- association:关联查询 -->
+    	<!-- 延迟加载:
+    		select:执行延迟加载sql的id
+			column:关联查询的列-外键
+			property：将查询的结果映射到orders的哪个属性中去
+    	 -->
+    	<association property="user" select="findUserById" column="user_id">    	
+    	</association>
+    </resultMap>
+    
+    <!-- 查询订单 -->
+    <select id="getOrders" resultMap="orderMap">
+    	select * from orders;
+    </select>
+    
+    <!-- 根据id查询用户 -->
+    <select id="findUserById" parameterType="int" resultType="User">
+    	select * from user where id = #{id}
+    </select>
+
+
+	
+	
+</mapper>
