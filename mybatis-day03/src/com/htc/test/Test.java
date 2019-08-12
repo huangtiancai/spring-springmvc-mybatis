@@ -63,8 +63,7 @@ public class Test {
 	public void findUserByName(){		
 		//获得会话
 		SqlSession sqlSession = MyBatisSessionFactory.getSession();
-		
-		//获取代理的实现类
+		//获取代理的实现类 
 		UserMapper um = sqlSession.getMapper(UserMapper.class);
 		
 		//包装类
