@@ -65,7 +65,6 @@ public class Test {
 		SqlSession sqlSession = MyBatisSessionFactory.getSession();
 		//获取代理的实现类 
 		UserMapper um = sqlSession.getMapper(UserMapper.class);
-		
 		//包装类
 		UserQueryVO userQueryVO = new UserQueryVO();
 		User user = new User();
