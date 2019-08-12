@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		 http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+         http://www.springframework.org/schema/mvc 
+         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+         http://www.springframework.org/schema/context 
+         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+    <!-- springmvc.xml配置：处理器映射器  适配器  视图解析器  Handler -->
+    
+    <!-- 第二种开发方式：使用注解 -->
+    
+	<!-- 2,3使用注解来配置处理器映射器/处理器适配器 -->
+	
+    <!-- 2.注解映射器:RequestMappingHandlerMapping 
+    	使用RequestMappingHandlerMapping需要在Handler中，使用@ Controller标识此类是一个hanndler(控制器)
+    -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"></bean>
+    	
+    <!-- 3.注解适配器:RequestMappingHandlerAdapter
+    	RequestMappingHandlerAdapter处理器适配器 不要求Handler实现任何接口
+		因为他需要个RequestMappingHandlerMapping注解映射器配对使用.
+    -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"></bean>
+       
+    <!-- 4.视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"></bean>
+	
+	<!-- 5.注解配置单个Handler   如果有很多的话，一个一个配置比较麻烦 -->
+    <!-- <bean class="com.htc.handler.ItesmHandler3"></bean> -->
+    <!-- 5.使用spring的组件扫描 包 -->
+    <context:component-scan base-package="com.htc.handler"/>
+    
+	
+</beans>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		 http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+         http://www.springframework.org/schema/mvc 
+         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+         http://www.springframework.org/schema/context 
+         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+    <!-- springmvc.xml配置：处理器映射器  适配器  视图解析器  Handler -->
+    
+    <!-- 第一种开发方式：使用xml（了解） --> 
+    <!-- 2,3是非注解处理器映射器和适配器，且是另外一种非注映射器/适配器 -->
+    <!-- 2.配置处理器映射器HandlerMapping
+    	SimpleUrlHandlerMapping(映射器)    [  找Handler ]     根据name
+    -->
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+    	<property name="mappings">
+    		<props>
+    			<prop key="/selectItems.action">ih</prop>
+    		</props>
+    	</property>
+    </bean>
+    	
+    <!-- 3.HttpRequestHandlerAdapter(适配器) [  执行Handler ] 
+    	这个适配器要求实现HttpRequestHandler接口
+    -->
+    <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"></bean>
+       
+    <!-- 4.视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"></bean>
+	
+	<!-- 5.实例化handler 实现HttpRequestHandler: ItesmHandler2 implements HttpRequestHandler-->
+    <bean id="ih" class="com.htc.handler.ItesmHandler2"></bean>
+    
+	
+</beans>
