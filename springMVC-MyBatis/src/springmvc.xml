@@ -23,6 +23,17 @@
 	<!-- 2.注解驱动 -->
 	<mvc:annotation-driven/>
 	
+	<mvc:annotation-driven conversion-service="conversionService"/>
+	
+	<!-- 转换器配置 -->
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<bean class="com.htc.Converter.DateConverter"/>
+			</set>
+		</property>
+	</bean>
+		
     <!-- 3.视图解析器 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
    		<!-- 配置逻辑视图的前缀 -->

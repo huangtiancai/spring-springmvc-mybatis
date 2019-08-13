@@ -8,7 +8,7 @@ public class Item {
     private String name;
 
     private Float price;
-
+    //pictureFile
     private String pic;
 
     private Date createtime;

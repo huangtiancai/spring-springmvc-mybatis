@@ -31,7 +31,9 @@ public interface ItemMapper {
     int updateByExampleWithBLOBs(@Param("record") Item record, @Param("example") ItemExample example);
 
     int updateByExample(@Param("record") Item record, @Param("example") ItemExample example);
-
+    
+    //按主键更新 值不为null 的字段
+    //会对字段进行判断再更新(如果为Null就忽略更新)
     int updateByPrimaryKeySelective(Item record);
 
     int updateByPrimaryKeyWithBLOBs(Item record);

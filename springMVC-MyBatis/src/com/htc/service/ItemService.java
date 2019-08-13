@@ -16,4 +16,10 @@ import com.htc.pojo.Item;
 public interface ItemService {
 	//查询商品列表
 	List<Item> queryItemList();
+	
+	//根据商品id查询商品
+	Item queryItemById(int id);
+	
+	//根据id更新商品
+	void updateItemById(Item item);
 }

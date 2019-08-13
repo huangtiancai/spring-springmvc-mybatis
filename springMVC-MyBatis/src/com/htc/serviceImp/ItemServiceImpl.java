@@ -35,7 +35,20 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public List<Item> queryItemList() {
 		List<Item> list =  itemMapper.selectByExample(null);
-		return null;
+		return list;
+	}
+	
+	//根据商品id查询商品
+	@Override
+	public Item queryItemById(int id) {
+		Item item = itemMapper.selectByPrimaryKey(id);
+		return item;
+	}
+
+	//根据id更新商品
+	@Override
+	public void updateItemById(Item item) {
+		itemMapper.updateByPrimaryKeySelective(item);
 	}
 
 }
