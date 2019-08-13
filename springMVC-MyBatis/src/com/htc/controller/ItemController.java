@@ -29,7 +29,7 @@ public class ItemController {
 		System.out.println("进入queryItemList");
 		
 		//获取商品数据
-		List<Item> list = this.itemService.queryItemList();
+		List<Item> list = itemService.queryItemList();
 		
 		//创建ModelAndView,用来存放数据和视图
 		ModelAndView mv = new ModelAndView();

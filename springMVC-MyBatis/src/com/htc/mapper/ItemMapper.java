@@ -6,8 +6,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface ItemMapper {
+	//按条件计数
     int countByExample(ItemExample example);
-
+    
     int deleteByExample(ItemExample example);
 
     int deleteByPrimaryKey(Integer id);
@@ -17,7 +18,10 @@ public interface ItemMapper {
     int insertSelective(Item record);
 
     List<Item> selectByExampleWithBLOBs(ItemExample example);
-
+    
+    //按条件查询
+    //查询商品列表
+    //List<Item> list =  itemMapper.selectByExample(null);
     List<Item> selectByExample(ItemExample example);
 
     Item selectByPrimaryKey(Integer id);

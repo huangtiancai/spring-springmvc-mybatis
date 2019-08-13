@@ -1,1 +1,9 @@
+/applicationContext-dao.xml
+/applicationContext-service.xml
+/applicationContext-trans.xml
 /com/
+/generatorConfig.xml
+/jdbc.properties
+/log4j.properties
+/mybatis-config.xml
+/springmvc.xml

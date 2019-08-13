@@ -34,7 +34,7 @@ public class ItemServiceImpl implements ItemService {
 	//显示商品列表
 	@Override
 	public List<Item> queryItemList() {
-		List<Item> list =  this.itemMapper.selectByExample(null);
+		List<Item> list =  itemMapper.selectByExample(null);
 		return null;
 	}
 
