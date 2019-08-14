@@ -46,6 +46,22 @@
     <!-- 直接配置处理器映射器和处理器适配器比较麻烦，可以使用注解驱动来加载 -->
 	<!-- 在springmvc.xml配置文件中使用<mvc:annotation-driven>替代注解处理器和适配器的配置。 -->
    
+   
+   <!-- 配置全局异常处理器 -->
+   <bean id="CustomHandleException" class="com.htc.exception.CustomHandleException"></bean>
+   
+   
+   <!--如果不使用注解驱动<mvc:annotation-driven />，就需要给处理器适配器配置json转换器-->
+<!-- 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+		<list>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
+		</list>
+		</property>
+	</bean> -->
+   
+   
+   
     
 	
 </beans>

@@ -30,7 +30,7 @@
 			</tr>
 			<c:forEach items="${itemList }" var="item">
 				<tr>
-					<td><input type="checkbox" name="ids" value="item.id"/></td>
+					<!-- <td><input type="checkbox" name="ids" value="item.id"/></td> -->
 					<td>${item.name }</td>
 					<td>${item.price }</td>
 					<td><fmt:formatDate value="${item.createtime}"
