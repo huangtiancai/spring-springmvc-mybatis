@@ -29,6 +29,7 @@
 	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="converters">
 			<set>
+				<!-- 可以配置多个自定义的类型转换器 -->
 				<bean class="com.htc.Converter.DateConverter"/>
 			</set>
 		</property>
