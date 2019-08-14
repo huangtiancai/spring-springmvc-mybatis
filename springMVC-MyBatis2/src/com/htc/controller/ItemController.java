@@ -28,7 +28,7 @@ import com.htc.service.ItemService;
 * @date:2019年8月12日 下午11:48:02
 */
 @Controller
-//@RequestMapping("item")
+@RequestMapping("item")
 public class ItemController {
 	@Autowired
 	private ItemService itemService;
@@ -467,6 +467,8 @@ public class ItemController {
 	
 
 	//拦截器
+	
+	//拦截器应用
 	
 	
 	
