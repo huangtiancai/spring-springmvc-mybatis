@@ -438,7 +438,7 @@ public class ItemController {
 	//我们需要从url上获取商品id，步骤如下:
 //	1. 使用注解@RequestMapping("item/{id}")声明请求的url   {xxx}叫做占位符，请求的URL可以是“item /1”或“item/2”
 //	2. 使用(@PathVariable() Integer id)获取url上的数据
-
+	
 	
 	@RequestMapping("item/{id}")
 	@ResponseBody 
@@ -464,5 +464,11 @@ public class ItemController {
 	
 	//4.如果加上@ResponseBody注解，就不会走视图解析器，不会返回页面，目前返回的json数据。如果不加，就走视图解析器，返回页面
 
+	
+
+	//拦截器
+	
+	
+	
 	
 }
