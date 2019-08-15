@@ -36,7 +36,7 @@ public class UserContrller {
 	@RequestMapping("login")
 	public String login(String username,String password,HttpSession session){
 		System.out.println("进入login方法！");
-		
+
 		//校验用户登录
 		System.out.println(username);
 		System.out.println(password);

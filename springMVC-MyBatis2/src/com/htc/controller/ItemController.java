@@ -33,7 +33,6 @@ public class ItemController {
 	@Autowired
 	private ItemService itemService;
 	
-	
 	//绑定包装pojo
 	//需求：使用包装的pojo接收商品信息的查询条件
 	
