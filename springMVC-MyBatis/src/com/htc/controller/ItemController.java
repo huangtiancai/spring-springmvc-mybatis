@@ -30,7 +30,6 @@ public class ItemController {
 	private ItemService itemService;
 	
 	/**
-	 * 
 	 * @describe 显示商品列表
 	 * @author ks0pc23-PC 
 	 * @date 2019年8月13日 下午2:11:40
