@@ -40,7 +40,6 @@ public class ItemController {
 	@RequestMapping("/itemList.action")
 	public ModelAndView queryItemList(){
 		System.out.println("进入queryItemList");
-		
 		//获取商品数据
 		List<Item> list = itemService.queryItemList();
 		
