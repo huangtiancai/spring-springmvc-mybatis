@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+						http://www.springframework.org/schema/tx
+						http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-4.0.xsd
+						http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+	<!-- 数据源(数据库连接池)  
+    	   配置SqlSessionFactory-创建会话工厂  
+    	   配置mapper文件扫描器 
+    -->
+    
+    <!-- 1.开启注解扫描包 -->
+    <context:component-scan base-package="com.htc"/>
+    
+    <!-- 2.整合mybatis部分 -->
+    
+    <!-- 加载配置文件 -->
+    <!-- 将jdbc的配置参数引入 -->                
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+	<!-- 加载jdbc链接数据库的参数文件 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+    	<!-- 配置数据源的各个参数 -->
+    	<property name="driverClassName" value="${jdbc.driverClassName}"/>
+    	<property name="url" value="${jdbc.url}"/>
+    	<property name="username" value="${jdbc.username}"/>
+    	<property name="password" value="${jdbc.password}"/>
+    	<property name="maxActive" value="${jdbc.maxActive}"/>
+    	<property name="initialSize" value="${jdbc.initialSize}"/>
+    	<property name="maxWait" value="${jdbc.maxWait}"/>
+    	<property name="minIdle" value="${jdbc.minIdle}"/>
+    </bean>
+
+	<!-- 配置SqlSessionFactory-创建会话工厂 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 为会话注入数据源 -->
+		<property name="dataSource" ref="dataSource"/>
+		<!-- 加载mybatis的全局配置文件 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml"/>
+	</bean>
+
+	<!-- 配置Mapper扫描 -->
+	<!-- 
+		  MapperScannerConfigurer :mapper扫描器
+		    将指定包下的mapper接口 自动创建代理对象
+		    创建的对象都在spring容器中 ，Bean的id就是mapper的类名(首字母只能小写)
+    -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	    <!-- 指定要扫描的包 -->
+	    <property name="basePackage" value="com.htc.mapper"></property>
+	    <!-- 指定会话工厂 -->
+	    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+	
+    
+</beans>
